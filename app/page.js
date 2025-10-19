@@ -1,153 +1,110 @@
+"use client";
 import React from "react";
-
+import TeacherLayout from "@/components/teacher/TeacherLayout";
+import QuickStats from "@/components/teacher/QuickStats";
+import ProfileCard from "@/components/teacher/ProfileCard";
+import StudentDataBlocks from "@/components/teacher/StudentDataBlocks";
+import RecentSessions from "@/components/teacher/RecentSessions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { GraduationCap, Users, BookOpen, Shield, Clock, MapPin } from "lucide-react";
+import { Settings, BookOpen, Clock, Trophy } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
+export default function TeacherDashboard() {
+  const mockTeacher = {
+    id: "T001",
+    name: "John Doe",
+    email: "johndoe@example.com",
+    subscription_status: true,
+  };
 
+  const mockStudents = [
+    { id: "S001", name: "Alice", semester: 3, section: "A" },
+    { id: "S002", name: "Bob", semester: 3, section: "A" },
+  ];
 
+  const mockSessions = [
+    {
+      id: "SE001",
+      topic_covered: "React Basics",
+      period: "9:00 - 10:00 AM",
+      semester: 3,
+      section: "A",
+      geofence_radius: 50,
+      status: "active",
+      created_date: new Date(),
+    },
+  ];
 
-export default function Home() {
+  const mockAttendance = [
+    { session_id: "SE001", student_id: "S001", status: "present" },
+    { session_id: "SE001", student_id: "S002", status: "absent" },
+  ];
+
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-indigo-600/10" />
-        <div className="relative max-w-7xl mx-auto px-6 py-20">
-          <div className="text-center">
-            <div className="flex justify-center mb-8">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-2xl">
-                <GraduationCap className="w-10 h-10 text-white" />
-              </div>
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Smart Attendance
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
-                Management System
-              </span>
+    <TeacherLayout>
+      <div className="space-y-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">
+              Welcome back, {mockTeacher.name}!
             </h1>
-            <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Revolutionary attendance tracking with geofencing, face recognition, and real-time analytics. 
-              Streamline your classroom management with cutting-edge technology.
+            <p className="text-gray-600 mt-1">
+              Manage your classes and track attendance seamlessly
             </p>
-            
-            {/* Portal Selection */}
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <Card className="relative overflow-hidden group hover:shadow-2xl transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 group-hover:from-blue-500/10 group-hover:to-indigo-500/10 transition-all duration-300" />
-                <CardHeader className="relative pb-4">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center mb-4 mx-auto shadow-lg">
-                    <Users className="w-8 h-8 text-white" />
-                  </div>
-                  <CardTitle className="text-2xl font-bold text-center">Teacher Portal</CardTitle>
-                </CardHeader>
-                <CardContent className="relative text-center">
-                  <p className="text-gray-600 mb-8 leading-relaxed">
-                    Create sessions, manage attendance, generate reports, and track student performance with advanced analytics.
-                  </p>
-                  <div className="space-y-3 mb-8">
-                    <div className="flex items-center gap-3 text-sm text-gray-600">
-                      <MapPin className="w-4 h-4 text-blue-500" />
-                      <span>Geofence-based attendance</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-sm text-gray-600">
-                      <Clock className="w-4 h-4 text-blue-500" />
-                      <span>Real-time session management</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-sm text-gray-600">
-                      <Shield className="w-4 h-4 text-blue-500" />
-                      <span>Manual override controls</span>
-                    </div>
-                  </div>
-                  <Button 
-                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg text-white font-semibold py-6 text-lg rounded-xl transition-all duration-300"
-                  >
-                    Access Teacher Portal
-                  </Button>
-                </CardContent>
-              </Card>
+          </div>
+          <Link href="/CreateSession" className="w-full md:w-auto">
+            <Button className="bg-gradient-to-r from-blue-600 to-indigo-600">
+              <BookOpen className="w-4 h-4 mr-2" />
+              Create New Session
+            </Button>
+          </Link>
+        </div>
 
-              <Card className="relative overflow-hidden group hover:shadow-2xl transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm">
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 group-hover:from-emerald-500/10 group-hover:to-teal-500/10 transition-all duration-300" />
-                <CardHeader className="relative pb-4">
-                  <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center mb-4 mx-auto shadow-lg">
-                    <BookOpen className="w-8 h-8 text-white" />
-                  </div>
-                  <CardTitle className="text-2xl font-bold text-center">Student Portal</CardTitle>
-                </CardHeader>
-                <CardContent className="relative text-center">
-                  <p className="text-gray-600 mb-8 leading-relaxed">
-                    Mark attendance seamlessly with face recognition, receive notifications, and track your attendance history.
-                  </p>
-                  <div className="space-y-3 mb-8">
-                    <div className="flex items-center gap-3 text-sm text-gray-600">
-                      <Shield className="w-4 h-4 text-emerald-500" />
-                      <span>Face recognition verification</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-sm text-gray-600">
-                      <Clock className="w-4 h-4 text-emerald-500" />
-                      <span>Instant notifications</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-sm text-gray-600">
-                      <BookOpen className="w-4 h-4 text-emerald-500" />
-                      <span>Attendance history tracking</span>
-                    </div>
-                  </div>
-                  <Button 
-                    className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 shadow-lg text-white font-semibold py-6 text-lg rounded-xl transition-all duration-300"
-                  >
-                    Access Student Portal
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
+        <QuickStats
+          students={mockStudents}
+          sessions={mockSessions}
+          attendanceRecords={mockAttendance}
+        />
+
+        <div className="grid lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-1 space-y-6">
+            <ProfileCard teacher={mockTeacher} />
+            <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Settings className="w-5 h-5 text-blue-600" />
+                  Quick Actions
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Link href="/CreateSession">
+                <Button variant="outline" className="w-full justify-start">
+                  <BookOpen className="w-4 h-4 mr-2" /> Create New Session
+                </Button>
+                </Link>
+                <Button variant="outline" className="w-full justify-start">
+                  <Clock className="w-4 h-4 mr-2" /> View Active Sessions
+                </Button>
+                <Button variant="outline" className="w-full justify-start">
+                  <Trophy className="w-4 h-4 mr-2" /> Generate Reports
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="lg:col-span-2 space-y-6">
+            <StudentDataBlocks
+              students={mockStudents}
+              attendanceRecords={mockAttendance}
+            />
+            <RecentSessions
+              sessions={mockSessions}
+              attendanceRecords={mockAttendance}
+            />
           </div>
         </div>
       </div>
-
-      {/* Features Section */}
-      <div className="py-20 bg-white/50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Powerful Features</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Experience the future of attendance management with our comprehensive suite of intelligent features
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: MapPin,
-                title: "Geofencing Technology",
-                description: "Automatic location-based attendance verification ensures students are physically present in the classroom.",
-                color: "from-blue-500 to-indigo-500"
-              },
-              {
-                icon: Shield,
-                title: "Face Recognition",
-                description: "Advanced biometric verification prevents proxy attendance and ensures accurate identification.",
-                color: "from-purple-500 to-pink-500"
-              },
-              {
-                icon: Clock,
-                title: "Real-time Updates",
-                description: "Instant notifications and live attendance tracking keep everyone synchronized and informed.",
-                color: "from-emerald-500 to-teal-500"
-              }
-            ].map((feature, index) => (
-              <Card key={index} className="relative overflow-hidden border-0 bg-white/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300">
-                <CardContent className="p-8 text-center">
-                  <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mb-6 mx-auto shadow-lg`}>
-                    <feature.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    </TeacherLayout>
   );
 }
